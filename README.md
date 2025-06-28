@@ -17,3 +17,5 @@
 ### How will the code "know" what chords to use?
   - Maybe favor certain "basic" chords? (I V more common than other chords?)
   - Setting rules, like where it has to 'resolve' to the I (More likley to end on a V or V7)
+### Converting chords from a specific key to a Roman numeral and vise versa
+### Will This be a web application with HTML, CSS, And Javascript? Or Just a stand alone application?
