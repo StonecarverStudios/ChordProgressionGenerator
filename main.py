@@ -20,6 +20,11 @@ Setting rules, like where it has to 'resolve' to the I (More likley to end on a 
 .pattern
    -you can extract the chord progression of a mode by entering a string or integer representing the chord scale
    -S('C major').pattern(6451) ///
+   -has num parameter to choose how many notes you want in each chord
+
+alg.detect()
+   -input note names and it analyxes and returns chord
+   chord_type = alg.detect(chord('C,E,G,B,D')) //returns Cmaj9
 Key: common notes
 
 
@@ -56,21 +61,21 @@ print()
 
 #Generates random chord progression in key of C Major using only its diotnic chords
 #Does not make much musical sense yet concistently, but its a start!!
-#Only lises the notes, does not give chord names
+#Gives Chord Names
 def generateChordProgression():
     key = scale("C", "Major")
     progList = []
-    for i in range(4):
+    for i in range(5):
         progList.append(random.randrange(0, 7) + 1)
-    progression = key.pattern(progList)
+    progression = key.pattern(progList, num=3)
 
-    finalProg = []
+    finalProgChords = []
 
     for ch in progression:
-      finalProg.append(ch.notes)
+      finalProgChords.append(alg.detect(ch))
 
     print(progList)
-    print(finalProg)
+    print(finalProgChords)
 
 generateChordProgression()
 #[print(chord.notes) for chord in S('C major').pattern(1645)]
@@ -82,7 +87,9 @@ print()
 
 key1 = "C"
 scales = scale(key1, "major")
-print(scale(key1, "major"))
+print(scale(key1, "harmonic minor"))
+print(scale(key1, "minor"))
+
 
 print()
 
@@ -93,6 +100,8 @@ print()
 
 e7sharp9 = get_chord('E', interval=[0, 4, 7, 10, 15])
 print(e7sharp9)
+print(alg.detect(e7sharp9))
+
 
 #SAMPLE
 #---------------------------------------------------------------
