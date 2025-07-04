@@ -13,6 +13,7 @@
   - Notes app like function to notate and markup ideas for uses with a specific chord progression
 - User can 'analyze progression' and see what the chords look like on a virtual piano, and see chords in standard music note notation
 - Slider to get progressions on a scale from conventonal to jazzy/experimental
+- Check box to allow for the chance for modal interchange
 ## Problems we need to solve❗🔊 
 ### How will the code "know" what chords to use?
   - Maybe favor certain "basic" chords? (I V more common than other chords?)
