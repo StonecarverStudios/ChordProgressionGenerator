@@ -1,6 +1,9 @@
 from musicpy import *
 import random
 
+def formatName(Chordname):
+    return Chordname.replace("half-diminished7", "ø")
+
 '''
 #Defines and maps the roman numeral degree of every mode of the major scale, and the 3 common minor scales#
     -degree -> an integer (from 1 to 7) indicating the scale degree.
@@ -56,6 +59,7 @@ def GenerateChordPogression(num: int = 4, key_note: str = "C", mode: str = "majo
         deg = degressList[i]
         roman = getRomanNumeral(deg, mode)
         name = alg.detect(chord_obj)#Identify and name chords based off of notes given
+        name = formatName(name) 
 
         romanDegrees.append(roman)
         progressionList.append(name)
@@ -69,9 +73,8 @@ def GenerateChordPogression(num: int = 4, key_note: str = "C", mode: str = "majo
 
 #Test Function in a nice format :)
 print()
-chordPlay, chordList, romanDegrees = GenerateChordPogression(5, "F#", "major", 4) #unpacks return value
+chordPlay, chordList, romanDegrees = GenerateChordPogression(5, "C", "lydian", 4) #unpacks return value
 print("Roman Numerals: \n" + ', '.join(romanDegrees))
 print()
 print("Your Progression: \n" + ', '.join(chordList))
 play(chordPlay, bpm=40, instrument=25, wait=True)
-
