@@ -4,6 +4,10 @@ import random
 def formatName(Chordname):
     return Chordname.replace("half-diminished7", "ø")
 
+#Cmaj7
+def swapChord(Chordname, key, numNotes):
+    newChord = key.pick_chord_by_degree(random.randint(1, 7)) 
+    newChord = Chordname.replace("maj7", random.choice(database.chord_types))
 '''
 #Defines and maps the roman numeral degree of every mode of the major scale, and the 3 common minor scales#
     -degree -> an integer (from 1 to 7) indicating the scale degree.
@@ -48,8 +52,8 @@ def GenerateChordPogression(num: int = 4, key_note: str = "C", mode: str = "majo
     #define varibles and create inital pattern
     key = scale(key_note, mode)
     degressList = [random.randint(1, 7) for i in range(num)]
-    degressList[num-1] = 1 # Makes sure the progression resolves on tonic so it is more likley to make musical sense
-    progressionNotes = key.pattern(degressList, num=numNotes)
+    degressList[num-1] = 1 # Makes sure the progression resolves on tonic so it is more likely to make musical sense
+    progressionNotes = key.pattern(degressList, num=numNotes) 
 
     romanDegrees = []
     progressionList = []
@@ -58,7 +62,7 @@ def GenerateChordPogression(num: int = 4, key_note: str = "C", mode: str = "majo
     for i, chord_obj in enumerate(progressionNotes):
         deg = degressList[i]
         roman = getRomanNumeral(deg, mode)
-        name = alg.detect(chord_obj)#Identify and name chords based off of notes given
+        name = alg.detect(chord_obj) #Identify and name chords based off of notes given
         name = formatName(name) 
 
         romanDegrees.append(roman)
@@ -72,8 +76,9 @@ def GenerateChordPogression(num: int = 4, key_note: str = "C", mode: str = "majo
 
 
 #Test Function in a nice format :)
+
 print()
-chordPlay, chordList, romanDegrees = GenerateChordPogression(5, "C", "lydian", 4) #unpacks return value
+chordPlay, chordList, romanDegrees = GenerateChordPogression(4, "C#", "major", 4) #unpacks return value
 print("Roman Numerals: \n" + ', '.join(romanDegrees))
 print()
 print("Your Progression: \n" + ', '.join(chordList))
