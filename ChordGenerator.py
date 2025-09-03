@@ -4,10 +4,6 @@ import random
 def formatName(Chordname):
     return Chordname.replace("half-diminished7", "ø")
 
-#Cmaj7
-def swapChord(Chordname, key, numNotes):
-    newChord = key.pick_chord_by_degree(random.randint(1, 7)) 
-    newChord = Chordname.replace("maj7", random.choice(database.chord_types))
 '''
 #Defines and maps the roman numeral degree of every mode of the major scale, and the 3 common minor scales#
     -degree -> an integer (from 1 to 7) indicating the scale degree.
