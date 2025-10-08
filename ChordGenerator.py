@@ -37,31 +37,33 @@ def splitChord(Chordname):
 '''
 def swapChord(Chordname, key_note, mode, chance: float=0.5):
     #init variables
-    new_root = None
+    deg = None
     newChord = None
     returnChord = None
-    key = S(f"{key_note} {mode}") #f-string syntax, inserts variables directly into strings nicely.
+    key = S(f"{key_note} {mode}") #f-string syntax, inserts variables directly as strings nicely.
 
 
-    root, chord_type = splitChord(Chordname)
+    root_note, chord_type = splitChord(Chordname)
+
     #Fallback if splitChord fails
-    if root is None or chord_type is None:
+    if root_note is None or chord_type is None:
         return None, Chordname
     
     if random.random() < chance:
         #Chnages chord Type
         new_chord_type = random.choice(ChordEx)
-        newChord = get_chord(root, new_chord_type)
+        newChord = get_chord(root_note, new_chord_type)
+        deg = key.get_degree(root_note)
         print("We Are swaping chord types!!!") #Testing, showing which is being activated
     else:
         #Changes root
-        new_root = str(random.randrange(1, 8))
-        newChord = key.get_chord(new_root, chord_type, natural = True)
+        deg = str(random.randrange(1, 8))
+        newChord = key.get_chord(str(deg), chord_type, natural = True)
         print("we are swapping root!!") #Testing, showing which is being activated
 
 
     returnChord = alg.detect(newChord)
-    return new_root, returnChord
+    return deg, returnChord
 
 
 
@@ -160,7 +162,7 @@ def GenerateChordPogression(num: int = 4, key_note: str = "C", mode: str = "majo
 
 #Test Chord Progression Generator in a nice format that plays it back:)
 print()
-chordPlay, chordList, romanDegrees = GenerateChordPogression(5, "Db", "lydian", 4) #unpacks return value
+chordPlay, chordList, romanDegrees = GenerateChordPogression(7, "G", "major", 4) #unpacks return value
 print("Roman Numerals: \n" + ', '.join(romanDegrees))
 print()
 print("Your Progression: \n" + ', '.join(chordList))
