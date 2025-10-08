@@ -35,9 +35,9 @@ def splitChord(Chordname):
     -chance -> float of chance of whether root or extension changes (0.5 = 50%)
 
 '''
-def swapChord(Chordname, key_note, mode, chance: float=0.5):
+def swapChord(Chordname, key_note, mode, deg, chance: float=0.5):
     #init variables
-    deg = None
+    new_deg = None
     newChord = None
     returnChord = None
     key = S(f"{key_note} {mode}") #f-string syntax, inserts variables directly as strings nicely.
@@ -53,17 +53,18 @@ def swapChord(Chordname, key_note, mode, chance: float=0.5):
         #Chnages chord Type
         new_chord_type = random.choice(ChordEx)
         newChord = get_chord(root_note, new_chord_type)
-        deg = key.get_degree(root_note)
+        new_deg = deg
         print("We Are swaping chord types!!!") #Testing, showing which is being activated
     else:
         #Changes root
-        deg = str(random.randrange(1, 8))
-        newChord = key.get_chord(str(deg), chord_type, natural = True)
+        new_deg = random.randint(1, 7)
+        newChord = key.get_chord(str(new_deg), chord_type, natural=True)
+
         print("we are swapping root!!") #Testing, showing which is being activated
 
 
     returnChord = alg.detect(newChord)
-    return deg, returnChord
+    return new_deg, returnChord
 
 
 
@@ -140,7 +141,7 @@ def GenerateChordPogression(num: int = 4, key_note: str = "C", mode: str = "majo
 
         #Checks for duplicate adjacent chords and either changes the root or chord extension
         if i > 0 and deg == degressList[i-1]:
-            deg, name = swapChord(name, key_note, mode, 0.5) 
+            deg, name = swapChord(name, key_note, mode, deg, 0.5) 
 
             #Fallback if getRomanNumeral fails if the root changes
             if deg is not None:
@@ -162,7 +163,7 @@ def GenerateChordPogression(num: int = 4, key_note: str = "C", mode: str = "majo
 
 #Test Chord Progression Generator in a nice format that plays it back:)
 print()
-chordPlay, chordList, romanDegrees = GenerateChordPogression(7, "G", "major", 4) #unpacks return value
+chordPlay, chordList, romanDegrees = GenerateChordPogression(5, "C#", "lydian", 4) #unpacks return value
 print("Roman Numerals: \n" + ', '.join(romanDegrees))
 print()
 print("Your Progression: \n" + ', '.join(chordList))
