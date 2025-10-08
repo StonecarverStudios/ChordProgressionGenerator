@@ -1,11 +1,78 @@
 from musicpy import *
 import random
 
-def formatName(Chordname):
-    return Chordname.replace("half-diminished7", "ø")
+#List of supported (and desired) chord extentions
+ChordEx = ["maj", "min", "maj7", "m7", "7", 
+            "sus", "sus2", "sus", 
+            "9", "maj9", "m9", "6", "m6", 
+            "11", "maj11", "m11", "add2", 
+            "add9", "7sus4", "7sus2", "13", 
+            "maj13", "m13", "maj13#11", "dim", "m7b5", 
+            "aug","aug6", "aug7"]
 
 '''
-#Defines and maps the roman numeral degree of every mode of the major scale, and the 3 common minor scales#
+#Splits a chord by the root and extension
+    -Chordname -> String of the chord name
+
+'''
+def splitChord(Chordname):
+    #List of all possible roots
+    roots = ["C", "C#", "Db", "D", "D#", "Eb", "E", "E#", "Fb", "F", "F#", "Gb", "G","G#", "Ab", "A", "A#", "Bb", "B", "B#", "Cb"]
+
+    for roots in sorted(roots, key=len, reverse=True): #Sorts list from greatest length to least
+        if Chordname.startswith(roots):
+            chord_type = Chordname[len(roots):]
+            return roots, chord_type
+        
+    #If function fails, return nothing
+    return None, None
+
+'''
+#Swaps a chord with another. With a chance of either changing the root or the extension
+    -Chordname -> String of the chord name
+    -key_note -> Key of chord progression
+    -mode -> a string specifying which scale or mode you're using
+    -chance -> float of chance of whether root or extension changes (0.5 = 50%)
+
+'''
+def swapChord(Chordname, key_note, mode, chance: float=0.5):
+    #init variables
+    new_root = None
+    newChord = None
+    returnChord = None
+    key = S(f"{key_note} {mode}") #f-string syntax, inserts variables directly into strings nicely.
+
+
+    root, chord_type = splitChord(Chordname)
+    #Fallback if splitChord fails
+    if root is None or chord_type is None:
+        return None, Chordname
+    
+    if random.random() < chance:
+        #Chnages chord Type
+        new_chord_type = random.choice(ChordEx)
+        newChord = get_chord(root, new_chord_type)
+        print("We Are swaping chord types!!!") #Testing, showing which is being activated
+    else:
+        #Changes root
+        new_root = str(random.randrange(1, 8))
+        newChord = key.get_chord(new_root, chord_type, natural = True)
+        print("we are swapping root!!") #Testing, showing which is being activated
+
+
+    returnChord = alg.detect(newChord)
+    return new_root, returnChord
+
+
+
+def formatName(Chordname):
+    newName = Chordname.replace("half-diminished7", "ø")
+    newName = newName.replace("major", "")
+    newName = newName.replace("minor", "m")
+    return newName
+
+'''
+#Defines and maps the roman numeral degree of every mode of the major scale, and the 3 common minor scales
     -degree -> an integer (from 1 to 7) indicating the scale degree.
     -mode -> a string specifying which scale or mode you're using (default is 'major').
 
@@ -31,13 +98,15 @@ def getRomanNumeral(degree, mode='major'):
         numerals = ['i°', '♭II', '♭iii', 'iv', '♭V', '♭VI', '♭vii']    
     else:
         raise ValueError("Unsupported mode")
+        
+
+    return numerals[int(degree) - 1]
     
-    return numerals[degree - 1]
 
 
 
 '''
-# Generates a Chord Progression and returns Chord object and List so it can playback progression and list what the progression is #
+#Generates a Chord Progression and returns Chord object and List so it can playback progression and list what the progression is in both Roman Numerals and the Chord names in given key
     num -> Number of chords you want in the progression
     key_note -> Key you want the Chord Progresion to be
     mode -> Mode you want chords to be chosen from
@@ -45,10 +114,10 @@ def getRomanNumeral(degree, mode='major'):
 
 '''
 def GenerateChordPogression(num: int = 4, key_note: str = "C", mode: str = "major", numNotes: int = 3):
-    #define varibles and create inital pattern
+    #Define varibles and create inital pattern
     key = scale(key_note, mode)
     degressList = [random.randint(1, 7) for i in range(num)]
-    degressList[num-1] = 1 # Makes sure the progression resolves on tonic so it is more likely to make musical sense
+    degressList[num-1] = 1 # Makes sure the progression most likely resolves on tonic so it is more likely to make musical sense
     progressionNotes = key.pattern(degressList, num=numNotes) 
 
     romanDegrees = []
@@ -57,10 +126,28 @@ def GenerateChordPogression(num: int = 4, key_note: str = "C", mode: str = "majo
 
     for i, chord_obj in enumerate(progressionNotes):
         deg = degressList[i]
-        roman = getRomanNumeral(deg, mode)
-        name = alg.detect(chord_obj) #Identify and name chords based off of notes given
-        name = formatName(name) 
+        
+        #Fallback if the getRomanNumeral fails
+        if deg is None:
+            roman = ""
+        else:
+            roman = getRomanNumeral(deg, mode)
 
+        name = alg.detect(chord_obj) #Identify and name chords based off of notes given
+        name = formatName(name)
+
+        #Checks for duplicate adjacent chords and either changes the root or chord extension
+        if i > 0 and deg == degressList[i-1]:
+            deg, name = swapChord(name, key_note, mode, 0.5) 
+
+            #Fallback if getRomanNumeral fails if the root changes
+            if deg is not None:
+                roman = getRomanNumeral(deg, mode)
+            else:
+                roman = ""
+
+
+        # Appends data created above to correct lists to order roman numeral degree, the progression itelf and the playable version. 
         romanDegrees.append(roman)
         progressionList.append(name)
         progressionPlay.append(C(name))
@@ -71,10 +158,9 @@ def GenerateChordPogression(num: int = 4, key_note: str = "C", mode: str = "majo
     return concat(lowered), progressionList, romanDegrees
 
 
-#Test Function in a nice format :)
-
+#Test Chord Progression Generator in a nice format that plays it back:)
 print()
-chordPlay, chordList, romanDegrees = GenerateChordPogression(4, "C#", "major", 4) #unpacks return value
+chordPlay, chordList, romanDegrees = GenerateChordPogression(5, "Db", "lydian", 4) #unpacks return value
 print("Roman Numerals: \n" + ', '.join(romanDegrees))
 print()
 print("Your Progression: \n" + ', '.join(chordList))

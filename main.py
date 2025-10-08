@@ -52,7 +52,7 @@ play(guitar, bpm=100, instrument=25, wait=True)
 #Generates a random diotonic chord from the key of C Major (displays the notes of the chord)
 def generateChordV1():
     chordScale = S("C major")
-    chordFn = chordScale(random.randrange(0,6)).notes
+    chordFn = chordScale.get_chord("1")
 
     return chordFn
 
@@ -101,6 +101,15 @@ print()
 e7sharp9 = get_chord('E', interval=[0, 4, 7, 10, 15])
 print(e7sharp9)
 print(alg.detect(e7sharp9))
+
+
+chordDatabase = list(database.chordTypes)
+chordEx = None
+    # Makes List of Chord extensions to slelect from musicpy's chord database
+for chords in chordDatabase:
+    chordEx = chords[0]
+print(chordDatabase)
+    
 
 
 #SAMPLE
