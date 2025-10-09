@@ -67,7 +67,11 @@ def swapChord(Chordname, key_note, mode, deg, chance: float=0.5):
     return new_deg, returnChord
 
 
+'''
+#Re-formats the names of specific chords to be more precice and look better when displayed
+    -Chordname -> String name of a chord
 
+'''
 def formatName(Chordname):
     newName = Chordname.replace("half-diminished7", "ø")
     newName = newName.replace("major", "")
@@ -163,7 +167,7 @@ def GenerateChordPogression(num: int = 4, key_note: str = "C", mode: str = "majo
 
 #Test Chord Progression Generator in a nice format that plays it back:)
 print()
-chordPlay, chordList, romanDegrees = GenerateChordPogression(5, "C#", "lydian", 4) #unpacks return value
+chordPlay, chordList, romanDegrees = GenerateChordPogression(5, "D", "locrian", 4) #unpacks return value
 print("Roman Numerals: \n" + ', '.join(romanDegrees))
 print()
 print("Your Progression: \n" + ', '.join(chordList))
