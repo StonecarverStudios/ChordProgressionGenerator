@@ -155,19 +155,18 @@ def GenerateChordPogression(num: int = 4, key_note: str = "C", mode: str = "majo
 
 
         # Appends data created above to correct lists to order roman numeral degree, the progression itelf and the playable version. 
-        romanDegrees.append(roman)
-        progressionList.append(name)
-        progressionPlay.append(C(name))
+        romanDegrees.append(roman) #roman numeral degree
+        progressionList.append(name) #Chord name in key
+        progressionPlay.append(C(name)) #Playable chord object
 
     lowered = chord(progressionPlay).down(12)#Brings all notes down and octave 
-
 
     return concat(lowered), progressionList, romanDegrees
 
 
 #Test Chord Progression Generator in a nice format that plays it back:)
 print()
-chordPlay, chordList, romanDegrees = GenerateChordPogression(5, "D", "locrian", 4) #unpacks return value
+chordPlay, chordList, romanDegrees = GenerateChordPogression(5, "Db", "phrygian", 4) #unpacks return value
 print("Roman Numerals: \n" + ', '.join(romanDegrees))
 print()
 print("Your Progression: \n" + ', '.join(chordList))

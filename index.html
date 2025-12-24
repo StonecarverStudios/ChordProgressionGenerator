@@ -3,14 +3,123 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta description="A web application to generate chord progressions for music composition.">
+    <meta name="description" content="A web application to generate chord progressions for music composition.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
+
+
     <title>Chord Progression Generator</title>
-    <link rel stulesheet href="style.css">
-</head>
+    <link rel="stylesheet" href="style.css">
+</head>+
 <body>
+    <!-- Title/Header Section -->
     <div class="container">
         <h1>Chord Progression Generator</h1>
-        <p>Welcome to the Chord Progression Generator</p>
+
+        <!-- Contols Section To Select Key, Mode, Spicyness-->
+        <div class="selectors">
+            <!-- Key Selector -->
+            <div class = "selector-item">
+            <label for="key-select">Key</label>
+            <select id="key-select"> 
+                <option value="C">C</option>
+                <option value="C#">C#</option>
+                <option value="Cb">Cb</option>
+                <option value="D">D</option>
+                <option value="D#">D#</option>
+                <option value="Db">Db</option>
+                <option value="E">E</option>
+                <option value="E#">E#</option>
+                <option value="Eb">Eb</option>
+                <option value="F">F</option>
+                <option value="F#">F#</option>
+                <option value="Fb">Fb</option>
+                <option value="G">G</option>
+                <option value="G#">G#</option>
+                <option value="Gb">Gb</option>
+                <option value="A">A</option>
+                <option value="A#">A#</option>
+                <option value="Ab">Ab</option>
+                <option value="B">B</option>
+                <option value="B#">B#</option>
+                <option value="Bb">Bb</option>
+            </select>
+            </div>
+            
+
+            <!-- Mode Selector -->
+            <div class = "selector-item">
+            <label for="mode-select">Mode</label>
+            <select id="mode-select"> 
+                <option value="major">Major</option>
+                <option value="dorian">Dorian</option>
+                <option value="mixolydian">Mixolydian</option>
+                <option value="lydian">Lydian</option>
+                <option value="phrygian">Phrygian</option>
+                <option value="locrian">Locrian</option>
+                <option value="minor">Minor</option>
+                <option value="harmonic minor">Harmonic Minor</option>
+                <option value="melodic minor">Melodic Minor</option>
+            </select>
+            </div>
+
+            <!-- Number of Chords Input-->
+            <div class = "selector-item">
+                <label for="num-chords">Number of Chords</label>
+                <div class="chord-count-wrapper">
+                    <input type="text" id="num-chords" name="num-chords" value="4" readonly required />
+                    <button class="small-btn" id="plus-btn">+</button>
+                    <button class="small-btn" id="minus-btn">−</button>
+                </div>
+            </div>
+
+            
+            <!-- Spicyness Checkbox -->
+            <div class = "selector-item">
+                <label for="spicy-checkbox">Spicy??</label> 
+                <input type="checkbox" id="spicy-checkbox" name="spicy-checkbox" />
+            </div>
+
+        </div>
+
+        <!-- Primary Controls -->
+        <div class = "controls">
+            <button id="generate-btn"><i class="material-symbols-outlined">music_note_add</i> Generate Progression</button>
+            <button id="save-btn"><i class="material-symbols-outlined">save</i> Save Progression</button>
+        </div>
+
+
+        <!-- Progression Display Area -->
+        <div id="progression-display">
+            <!-- Generated chord progression will be displayed here -->
+                <div class="chord-progression-window">
+                    <div>I</div>
+                    <div>V</div>
+                    <div>III</div>
+                    <div>IV</div>
+                </div>
+
+                <div class="chord-progression-window">
+                    <div>C</div>
+                    <div>G</div>
+                    <div>E</div>
+                    <div>F</div>
+                </div>
+        </div>
+
+        <!-- Playback Controls -->
+        <div class = "playback-controls">
+            <audio controls>
+                <!-- Audio element that will play MIDI file -->
+            </audio>
+        </div>
+
+        <!-- =SpecialControls -->
+        <div class = "special-controls">
+            <button id="edit-btn"><i class="material-symbols-outlined">edit</i> Edit Progression</button>
+
     </div>
 </body>
 </html>
