@@ -1,6 +1,29 @@
+//importins css, compenents, and libraries
+import { useState } from "react";
 import './style.css'
+import ChordCount from "./components/ChordCount";
+import ProgressionDisplay from "./components/ProgressionDisplay";
+
 
 function App() {
+  //Variables and States
+  //Chord Counter
+  const [numChords, setNumChords] = useState(4);
+  
+  const [progression, setProgression] = useState([]);
+
+  const handleGenerate = () => {
+    const newProg = Array.from({ length: numChords }, () => ({
+      chord: "",
+      roman: ""
+    }));
+    setProgression(newProg);
+    console.log("Generated:", newProg);
+
+  };
+
+
+  //HTML Structure
   return (
     <div className="container">
       <h1>Chord Progression Generator</h1>
@@ -52,22 +75,11 @@ function App() {
           </select>
         </div>
 
-        {/* Number of Chords */}
-        <div className="selector-item">
-          <label htmlFor="num-chords">Number of Chords</label>
-          <div className="chord-count-wrapper">
-            <input
-              type="text"
-              id="num-chords"
-              name="num-chords"
-              defaultValue="4"
-              readOnly
-              required
-            />
-            <button className="small-btn" id="plus-btn">+</button>
-            <button className="small-btn" id="minus-btn">−</button>
-          </div>
-        </div>
+        {/* Number of Chords React Component*/}
+        <ChordCount
+          chordCount={numChords}
+          setChordCount={setNumChords}
+        />
 
         {/* Spiciness Checkbox */}
         <div className="selector-item">
@@ -79,7 +91,7 @@ function App() {
 
       {/* Primary Controls */}
       <div className="controls">
-        <button id="generate-btn" className="iconBtn">
+        <button id="generate-btn" className="iconBtn" onClick={handleGenerate}>
           <i className="material-symbols-outlined">music_note_add</i>
           Generate Progression
         </button>
@@ -92,9 +104,9 @@ function App() {
 
       {/* Progression Display */}
       <div id="progression-display">
-        <div className="chord-progression-window"></div>
-        <div className="chord-progression-window"></div>
+        <ProgressionDisplay progression={progression} numChords={numChords} />
       </div>
+
 
       {/* Playback Controls */}
       <div className="playback-controls">
