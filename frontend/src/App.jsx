@@ -3,15 +3,25 @@ import { useState } from "react";
 import './style.css'
 import ChordCount from "./components/ChordCount";
 import ProgressionDisplay from "./components/ProgressionDisplay";
+import KeySelector from "./components/KeySelector";
+import ModeSelector from "./components/ModeSelector";
+import SpicyCheckbox from "./components/SpicyCheckbox";
 
 
 function App() {
   //Variables and States
   //Chord Counter
   const [numChords, setNumChords] = useState(4);
-  
+  //Progression State
   const [progression, setProgression] = useState([]);
+  //Key State
+  const [selectedKey, setSelectedKey] = useState("C");
+  //Mode State
+  const [selectedMode, setSelectedMode] = useState("major");
+  //Spicy State
+  const [isSpicy, setIsSpicy] = useState(false);
 
+  
   const handleGenerate = () => {
     const newProg = Array.from({ length: numChords }, () => ({
       chord: "",
@@ -32,48 +42,16 @@ function App() {
       <div className="selectors">
 
         {/* Key Selector */}
-        <div className="selector-item">
-          <label htmlFor="key-select">Key</label>
-          <select id="key-select">
-            <option value="C">C</option>
-            <option value="C#">C#</option>
-            <option value="Cb">Cb</option>
-            <option value="D">D</option>
-            <option value="D#">D#</option>
-            <option value="Db">Db</option>
-            <option value="E">E</option>
-            <option value="E#">E#</option>
-            <option value="Eb">Eb</option>
-            <option value="F">F</option>
-            <option value="F#">F#</option>
-            <option value="Fb">Fb</option>
-            <option value="G">G</option>
-            <option value="G#">G#</option>
-            <option value="Gb">Gb</option>
-            <option value="A">A</option>
-            <option value="A#">A#</option>
-            <option value="Ab">Ab</option>
-            <option value="B">B</option>
-            <option value="B#">B#</option>
-            <option value="Bb">Bb</option>
-          </select>
-        </div>
+        <KeySelector 
+          selectedKey={selectedKey} 
+          setSelectedKey={setSelectedKey} 
+        />
 
         {/* Mode Selector */}
-        <div className="selector-item">
-          <label htmlFor="mode-select">Mode</label>
-          <select id="mode-select">
-            <option value="major">Major</option>
-            <option value="dorian">Dorian</option>
-            <option value="mixolydian">Mixolydian</option>
-            <option value="lydian">Lydian</option>
-            <option value="phrygian">Phrygian</option>
-            <option value="locrian">Locrian</option>
-            <option value="minor">Minor</option>
-            <option value="harmonic minor">Harmonic Minor</option>
-            <option value="melodic minor">Melodic Minor</option>
-          </select>
-        </div>
+        <ModeSelector 
+          selectedMode={selectedMode} 
+          setSelectedMode={setSelectedMode} 
+        />
 
         {/* Number of Chords React Component*/}
         <ChordCount
@@ -82,11 +60,10 @@ function App() {
         />
 
         {/* Spiciness Checkbox */}
-        <div className="selector-item">
-          <label htmlFor="spicy-checkbox">Spicy??</label>
-          <input type="checkbox" id="spicy-checkbox" name="spicy-checkbox" />
-        </div>
-
+        <SpicyCheckbox 
+          isSpicy={isSpicy} 
+          setIsSpicy={setIsSpicy} 
+        />
       </div>
 
       {/* Primary Controls */}
@@ -96,30 +73,31 @@ function App() {
           Generate Progression
         </button>
 
-        <button id="save-btn" className="iconBtn">
+        {/* Save Button WILL ADD LATER*/}
+        {/* <button id="save-btn" className="iconBtn">
           <i className="material-symbols-outlined">save</i>
           Save Progression
-        </button>
+        </button> */}
       </div>
 
       {/* Progression Display */}
       <div id="progression-display">
-        <ProgressionDisplay progression={progression} numChords={numChords} />
+        <ProgressionDisplay progression={progression} numChords={numChords}/>
       </div>
-
+ 
 
       {/* Playback Controls */}
       <div className="playback-controls">
         <audio controls />
       </div>
 
-      {/* Special Controls */}
-      <div className="special-controls">
+      {/* Special Controls WILL ADD LATER*/}
+      {/* <div className="special-controls">
         <button id="edit-btn" className="iconBtn">
           <i className="material-symbols-outlined">edit</i>
           Edit Progression
         </button>
-      </div>
+      </div> */}
     </div>
   )
 }

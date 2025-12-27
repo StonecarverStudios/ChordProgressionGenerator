@@ -1,6 +1,6 @@
-function ProgressionDisplay({ progression, numChords }) {
-  const romanRow = progression.slice(0, numChords);
-  const chordRow = progression.slice(0, numChords);
+function ProgressionDisplay({ progression }) {
+  const romanRow = progression; 
+  const chordRow = progression;
 
   return (
     <div>

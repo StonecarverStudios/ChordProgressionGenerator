@@ -166,7 +166,7 @@ button:hover {
 
 .chord-block{
   flex: 0 0 auto;
-  width: 70px;              
+  width: clamp(70px, 8vw, 130px);            
   padding: 24px 12px;         
   font-size: 2rem;          
   background: linear-gradient(135deg, #0a0a0a, #1a1a1a);
