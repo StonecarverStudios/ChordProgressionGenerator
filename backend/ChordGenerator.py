@@ -165,9 +165,10 @@ def GenerateChordPogression(num: int = 4, key_note: str = "C", mode: str = "majo
 
 
 #Test Chord Progression Generator in a nice format that plays it back:)
-print()
-chordPlay, chordList, romanDegrees = GenerateChordPogression(5, "Db", "phrygian", 4) #unpacks return value
-print("Roman Numerals: \n" + ', '.join(romanDegrees))
-print()
-print("Your Progression: \n" + ', '.join(chordList))
-play(chordPlay, bpm=40, instrument=25, wait=True)
+if __name__ == "__main__":
+    print()
+    chordPlay, chordList, romanDegrees = GenerateChordPogression(5, "Db", "phrygian", 4) #unpacks return value
+    print("Roman Numerals: \n" + ', '.join(romanDegrees))
+    print()
+    print("Your Progression: \n" + ', '.join(chordList))
+    play(chordPlay, bpm=40, instrument=25, wait=True)

@@ -22,17 +22,49 @@ function App() {
   const [isSpicy, setIsSpicy] = useState(false);
 
   
-  const handleGenerate = () => {
-    const newProg = Array.from({ length: numChords }, () => ({
-      chord: "",
-      roman: ""
-    }));
-    setProgression(newProg);
-    console.log("Generated:", newProg);
+  // Function to generate a new chord progression by calling the backend API
+  const handleGenerate = async () => {
+    try {
+      // Make a POST request to the backend to generate chords
+      const response = await fetch("http://127.0.0.1:5000/generate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        // Send current settings: number of chords, key, mode, and spicy checkbox
+        body: JSON.stringify({
+          numChords,
+          key: selectedKey,
+          mode: selectedMode,
+          spicy: isSpicy,
+        }),
+      });
 
+      // Check if the request was successful
+      if (!response.ok) {
+        console.error("Failed to generate progression");
+        return;
+      }
+
+      // Parse the JSON response from the backend
+      const data = await response.json();
+      console.log("Backend returned:", data);
+
+      // Transform the response data into an array of chord objects with roman numerals
+      const newProg = data.chordList.map((chord, i) => ({
+        chord,
+        roman: data.romanDegrees[i],
+      }));
+
+      console.log("Setting progression to:", newProg);
+
+      // Update the progression state with the newly generated chords
+      setProgression(newProg);
+    } catch (error) {
+      // Log any errors that occur during the API call
+      console.error("Error calling backend:", error);
+    }
   };
 
-
+  
   //HTML Structure
   return (
     <div className="container">
