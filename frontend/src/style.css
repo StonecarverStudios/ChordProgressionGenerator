@@ -152,31 +152,32 @@ button:hover {
 
 .chord-progression-window {
   display: flex;
+  flex-wrap: wrap; 
   gap: 15px;
   justify-content: center;
-  padding: 20px;
+  padding: 24px;
   background-color: #1a1a1a;
   border-radius: 10px;
   border-width: 1.5px;
   border-style: solid;
   border-color: #000000;
-  margin-bottom: 4px;
+  margin-bottom: 5px;
 }
 
-.chord-progression-window > div {
-  flex: 1;
-  max-width: 120px;
+.chord-block{
+  flex: 0 0 auto;
+  width: clamp(70px, 8vw, 130px);            
+  padding: 24px 12px;         
+  font-size: 2rem;          
   background: linear-gradient(135deg, #0a0a0a, #1a1a1a);
   border-radius: 12px;
-  padding: 25px 10px;
-  font-size: 2rem;
   font-family: "Share Tech", monospace;
   border: 1px solid rgba(0, 150, 255, 0.4);
   box-shadow: 0 0 15px rgba(0, 150, 255, 0.3);
   transition: 0.25s;
 }
 
-.chord-progression-window > div:hover {
+.chord-block:hover {
   transform: scale(1.08);
   box-shadow: 0 0 25px rgba(0, 150, 255, 0.7);
 }
