@@ -1,11 +1,12 @@
 //importins css, compenents, and libraries
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import './style.css'
 import ChordCount from "./components/ChordCount";
 import ProgressionDisplay from "./components/ProgressionDisplay";
 import KeySelector from "./components/KeySelector";
 import ModeSelector from "./components/ModeSelector";
 import SpicyCheckbox from "./components/SpicyCheckbox";
+import { initPiano, playChord } from "./sound";
 
 
 function App() {
@@ -20,7 +21,28 @@ function App() {
   const [selectedMode, setSelectedMode] = useState("major");
   //Spicy State
   const [isSpicy, setIsSpicy] = useState(false);
+  //piano loaded state
+  const [pianoLoaded, setPianoLoaded] = useState(false);
 
+  //Initialize Piano on Load  
+  useEffect(() => {
+    initPiano().then(() => setPianoLoaded(true));
+  }, []);
+  
+  //Function to play a single chord when clicked
+  const handlePlayChord = (slot) => {
+    playChord(slot.notes, 2.5, 0, 9.0); // longer sustain, louder
+    console.log("Playing chord:", slot.notes, Array.isArray(slot.notes));
+  };
+  //Function to play the entire progression
+  const handlePlayProgression = () => {
+    const chordDuration = 2.0;
+    const volume = 9.0;
+
+    progression.forEach((slot, i) => {
+      playChord(slot.notes, chordDuration, i * chordDuration, volume);
+    });
+  };
   
   // Function to generate a new chord progression by calling the backend API
   const handleGenerate = async () => {
@@ -50,6 +72,7 @@ function App() {
 
       // Transform the response data into an array of chord objects with roman numerals
       const newProg = data.chordList.map((chord, i) => ({
+        notes: data.chordNotes[i],   // correct
         chord,
         roman: data.romanDegrees[i],
       }));
@@ -114,13 +137,18 @@ function App() {
 
       {/* Progression Display */}
       <div id="progression-display">
-        <ProgressionDisplay progression={progression} numChords={numChords}/>
+        <ProgressionDisplay
+          progression={progression}
+          onChordClick={handlePlayChord}
+        />
       </div>
  
 
       {/* Playback Controls */}
       <div className="playback-controls">
-        <audio controls />
+        <button onClick={handlePlayProgression} disabled={!pianoLoaded}>
+          Play Progression
+        </button>
       </div>
 
       {/* Special Controls WILL ADD LATER*/}

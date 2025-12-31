@@ -18,9 +18,10 @@ def generate():
     #Spicy determins the number of notes. If it is true, it should be 4, otherwise 3.
     num_notes = 4 if spicy else 3
 
-    _, chordList, romanDegrees = GenerateChordPogression(num, key_note, mode, num_notes)
+    notes, chordList, romanDegrees = GenerateChordPogression(num, key_note, mode, num_notes)
 
     response = {
+        "chordNotes": notes,
         "chordList": chordList,
         "romanDegrees": romanDegrees
     }
