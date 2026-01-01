@@ -48,7 +48,7 @@ function App() {
   const handleGenerate = async () => {
     try {
       // Make a POST request to the backend to generate chords
-      const response = await fetch("http://127.0.0.1:5000/generate", {
+      const response = await fetch("https://chordgen-backend.onrender.com", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         // Send current settings: number of chords, key, mode, and spicy checkbox
