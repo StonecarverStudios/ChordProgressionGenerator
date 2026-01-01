@@ -16,8 +16,9 @@ Powered by **MusicPy** for harmonic logic and **SoundFont synthesis** for real�
 
 ### 🔷 Future Features
 - **Advanced playback controls**
-  - Adjustable duration, volume, and transport controls (play/stop)
+  - Adjustable duration, tempo, volume, and transport controls (play/stop)
   - Reverb & audio effects
+  - Chords light up when played in time during progression playback
 - **Save & load progressions**
   - Save favorite progressions
   - Notes/annotation system for musical ideas
@@ -29,6 +30,7 @@ Powered by **MusicPy** for harmonic logic and **SoundFont synthesis** for real�
 - **Editable chord slots**
 
 ### ♦️ Quality of Life Improvements
+- **Full Mobile Support
 - **Navigation bar**
   - Pages for saved progressions, About, etc.
 - **Improved chord‑generation logic**
