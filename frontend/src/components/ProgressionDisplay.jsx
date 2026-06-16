@@ -1,4 +1,4 @@
-function ProgressionDisplay({ progression, onChordClick }) {
+function ProgressionDisplay({ progression, onChordClick, playingIndex }) {
   return (
     <div>
       {/* ROMAN NUMERALS ROW */}
@@ -6,7 +6,7 @@ function ProgressionDisplay({ progression, onChordClick }) {
         {progression.map((slot, index) => (
           <div
             key={index}
-            className="chord-block"
+            className={`chord-block ${index === playingIndex ? 'playing' : ''}`}
             onClick={() => onChordClick(slot)}
           >
             {slot.roman}
@@ -19,7 +19,7 @@ function ProgressionDisplay({ progression, onChordClick }) {
         {progression.map((slot, index) => (
           <div
             key={index}
-            className="chord-block"
+            className={`chord-block ${index === playingIndex ? 'playing' : ''}`}
             onClick={() => onChordClick(slot)}
           >
             {slot.chord}

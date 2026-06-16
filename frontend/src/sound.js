@@ -1,18 +1,19 @@
+//chordDuration = 60 / bpm * beatsPerChord
 import Soundfont from "soundfont-player";
 
 let audioContext = null;
 let piano = null;
 let pianoReady = false;
+let activeNodes = [];
 
-export async function initPiano() {
+export async function initPiano(instrumentName = "acoustic_grand_piano") {
   if (!audioContext) {
     audioContext = new (window.AudioContext || window.webkitAudioContext)();
   }
 
-  if (!piano) {
-    piano = await Soundfont.instrument(audioContext, "acoustic_grand_piano");
+    piano = await Soundfont.instrument(audioContext, instrumentName);
     pianoReady = true;
-  }
+
 
   return piano;
 }
@@ -35,6 +36,14 @@ export function playChord(notes, duration = 1.5, when = 0, volume = 1.0) {
     // Force the note to stop early
     if (node && typeof node.stop === "function") {
       node.stop(stopTime);
+      activeNodes.push(node);
     }
   });
+}
+
+export function stopAllSound() {
+  activeNodes.forEach(node => {
+    try { node.stop(); } catch (e) {} // already stopped nodes throw, ignore
+  });
+  activeNodes = [];
 }
