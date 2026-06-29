@@ -51,22 +51,27 @@ via SoundFont synthesis.
 ```
 ChordProgressionGenerator/
 ├── backend/
-│   ├── app.py              # Flask app, API routes
-│   ├── ChordGenerator.py   # MusicPy chord logic
-│   └── requirements.txt    # Python dependencies
+│   ├── app.py                  # Flask app and API routes
+│   ├── ChordGenerator.py       # MusicPy chord generation logic
+│   └── requirements.txt        # Python dependencies
+│
 ├── frontend/
-│   ├── index.html
+│   ├── index.html              # HTML entry point
+│   ├── package.json            # Node dependencies and scripts
+│   ├── vite.config.js          # Vite build configuration
 │   └── src/
-│       ├── App.jsx             # Root component, state management
-│       ├── sound.js            # Audio context, SoundFont playback
-│       ├── style.css
+│       ├── App.jsx             # Root component, global state
+│       ├── sound.js            # Web Audio API + SoundFont playback
+│       ├── style.css           # Global styles
 │       └── components/
-│           ├── ChordCount.jsx
-│           ├── KeySelector.jsx
-│           ├── ModeSelector.jsx
-│           ├── ProgressionDisplay.jsx
-│           ├── SpicyCheckbox.jsx
-│           └── InstrumentSelector.jsx
+│           ├── ChordCount.jsx          # +/- chord number selector
+│           ├── KeySelector.jsx         # Musical key dropdown
+│           ├── ModeSelector.jsx        # Scale/mode dropdown
+│           ├── ProgressionDisplay.jsx  # Chord grid with roman numerals
+│           ├── SpicyCheckbox.jsx       # 4-note chord toggle
+│           └── InstrumentSelector.jsx  # Soundfont instrument picker
+│
+├── .gitignore
 └── README.md
 ```
 
