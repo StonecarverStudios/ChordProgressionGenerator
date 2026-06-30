@@ -4,6 +4,7 @@
 [![Frontend](https://img.shields.io/badge/frontend-React%20%2B%20Vite-61dafb)](https://vitejs.dev/)
 [![Backend](https://img.shields.io/badge/backend-Flask%20%2B%20Python-green)](https://flask.palletsprojects.com/)
 [![Live](https://img.shields.io/badge/live-Render-purple)](https://chordgen-frontend.onrender.com)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 A full-stack music tool that generates randomized chord progressions 
 for songwriters and composers. Built with a React/Vite frontend and 
@@ -162,3 +163,4 @@ Generates a chord progression based on input parameters.
 
 ## 📄 License
 MIT License — feel free to use, modify, and build on this project.
+
