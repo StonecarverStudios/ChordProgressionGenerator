@@ -124,7 +124,9 @@ def GenerateChordPogression(num: int = 4, key_note: str = "C", mode: str = "majo
     #Define varibles and create inital pattern
     key = scale(key_note, mode)
     degressList = [random.randint(1, 7) for i in range(num)]
-    degressList[num-1] = 1 # Makes sure the progression most likely resolves on tonic so it is more likely to make musical sense
+
+    endChord = [1, 4, 5, 6] #Defines the chords that are most likely to resolve the progression in a musical way
+    degressList[num-1] = random.choice(endChord) # Makes sure the progression most likely resolves on tonic so it is more likely to make musical sense
     progressionNotes = key.pattern(degressList, num=numNotes) 
 
     romanDegrees = []
